@@ -195,7 +195,6 @@ void main() {
 
         #if SSAO_QUALI > 0 || defined WORLD_OUTLINE || defined SSGI_ENABLED || defined RT_SHADOW_ENABLED || defined RT_REFLECTION_ENABLED || defined RT_AO_ENABLED
             float linearZ0 = GetLinearDepth(z0);
-            #define RT_LINEAR_Z0_DEFINED
         #endif
 
         #if SSAO_QUALI > 0

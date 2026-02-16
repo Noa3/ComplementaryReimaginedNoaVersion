@@ -248,7 +248,6 @@ float DoScreenSpaceRTAO(
                 float dist = float(j) * invSteps;
                 float falloff = 1.0 - dist * dist;
                 occlusion += falloff;
-                totalWeight += 1.0;
                 break;
             }
 
