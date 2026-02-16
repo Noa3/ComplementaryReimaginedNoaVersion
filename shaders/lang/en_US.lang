@@ -818,6 +818,55 @@ option.PLAYER_SHADOW.comment=Determines if the player will cast a shadow or not.
 value.PLAYER_SHADOW.-1=OFF
 value.PLAYER_SHADOW.1=ON
 
+screen.RT_LIGHTING_SETTINGS=Ray-Traced Lighting §c[-]§r
+screen.RT_LIGHTING_SETTINGS.comment=Settings for screen-space ray-traced lighting effects. These approximate path-traced effects by tracing rays in screen space. §c[-]§r These settings can significantly impact performance. §e[*]§r RT Ambient Occlusion replaces standard SSAO when enabled.
+
+option.RT_SUNLIGHT_TRACING=RT Global Illumination
+option.RT_SUNLIGHT_TRACING.comment=Enables Screen-Space Global Illumination, a path tracing approximation that adds indirect diffuse lighting bounces using screen-space ray marching. Higher quality uses more rays and steps for smoother, more accurate results. §c[-]§r This effect can impact performance, especially at higher quality levels.
+value.RT_SUNLIGHT_TRACING.0=§aOFF
+value.RT_SUNLIGHT_TRACING.1=§eLow
+value.RT_SUNLIGHT_TRACING.2=§cMedium
+value.RT_SUNLIGHT_TRACING.3=§4§lHigh
+
+option.RT_GI_STRENGTH=GI Strength
+option.RT_GI_STRENGTH.comment=Adjusts the intensity of the screen-space global illumination effect. Higher values produce more visible indirect light bounces.
+
+option.RT_GI_RADIUS=GI Radius
+option.RT_GI_RADIUS.comment=Controls how far rays are traced for indirect lighting. Larger radii capture light bouncing from more distant surfaces but may introduce noise.
+
+option.RT_SHADOW=RT Shadow
+option.RT_SHADOW.comment=Enables screen-space ray-traced contact shadows. Traces rays toward the light source to detect nearby occluders, adding fine shadow detail not captured by shadow maps. §c[-]§r This effect can impact performance, especially at higher quality levels.
+value.RT_SHADOW.0=§aOFF
+value.RT_SHADOW.1=§eLow
+value.RT_SHADOW.2=§cMedium
+value.RT_SHADOW.3=§4§lHigh
+
+option.RT_SHADOW_STRENGTH=Shadow Strength
+option.RT_SHADOW_STRENGTH.comment=Adjusts the intensity of the screen-space ray-traced shadow effect. Higher values produce darker contact shadows.
+
+option.RT_REFLECTION=RT Reflection
+option.RT_REFLECTION.comment=Enables screen-space ray-traced reflections. Traces reflected rays in screen space to add extra reflection detail. Works alongside existing reflection methods. §c[-]§r This effect can impact performance, especially at higher quality levels.
+value.RT_REFLECTION.0=§aOFF
+value.RT_REFLECTION.1=§eLow
+value.RT_REFLECTION.2=§cMedium
+value.RT_REFLECTION.3=§4§lHigh
+
+option.RT_REFLECTION_STRENGTH=Reflection Strength
+option.RT_REFLECTION_STRENGTH.comment=Adjusts the intensity of the screen-space ray-traced reflection effect. Higher values produce more visible reflections.
+
+option.RT_AO=RT Ambient Occlusion
+option.RT_AO.comment=Enables screen-space ray-traced ambient occlusion. Uses hemisphere ray tracing for more accurate occlusion than standard SSAO. §e[*]§r When enabled, this replaces the standard SSAO effect. §c[-]§r This effect can impact performance, especially at higher quality levels.
+value.RT_AO.0=§aOFF
+value.RT_AO.1=§eLow
+value.RT_AO.2=§cMedium
+value.RT_AO.3=§4§lHigh
+
+option.RT_AO_STRENGTH=AO Strength
+option.RT_AO_STRENGTH.comment=Adjusts the intensity of the screen-space ray-traced ambient occlusion effect. Higher values produce darker ambient occlusion.
+
+option.RT_AO_RADIUS=AO Radius
+option.RT_AO_RADIUS.comment=Controls how far rays are traced for ambient occlusion. Larger radii detect occlusion from more distant surfaces.
+
 option.GENERATED_NORMALS=Generated Normals
 option.GENERATED_NORMALS.comment=Adds auto-generated bumpy details to surfaces. §e[*]§r RP Support option must be set to Integrated PBR+.
 
