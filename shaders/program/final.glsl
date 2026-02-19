@@ -93,7 +93,7 @@ void main() {
 
     #if defined HEAT_DISTORTION || defined NETHER_HEAT_DISTORTION
         if (isEyeInWater == 0) {
-            float depth = texture2D(depthtex0, texCoordM).r;
+            float depth = texture2D(depthtex0, texCoord).r;
             float linearDepth = (2.0 * near) / (far + near - depth * (far - near));
             float distFactor = smoothstep(0.05, 0.4, linearDepth);
 
