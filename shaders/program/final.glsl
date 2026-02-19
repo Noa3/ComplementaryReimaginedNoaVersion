@@ -91,6 +91,30 @@ void main() {
             texCoordM += WATER_REFRACTION_INTENSITY * 0.00035 * sin((texCoord.x + texCoord.y) * 25.0 + frameTimeCounter * 3.0);
     #endif
 
+    #if defined HEAT_DISTORTION || defined NETHER_HEAT_DISTORTION
+        if (isEyeInWater == 0) {
+            float depth = texture2D(depthtex0, texCoordM).r;
+            float linearDepth = (2.0 * near) / (far + near - depth * (far - near));
+            float distFactor = smoothstep(0.05, 0.4, linearDepth);
+
+            #ifdef HEAT_DISTORTION
+                float heatFactor = inDry * noonFactor * distFactor;
+                float heatWave1 = sin(texCoord.x * 40.0 + texCoord.y * 10.0 + frameTimeCounter * 2.5);
+                float heatWave2 = sin(texCoord.y * 30.0 + texCoord.x * 20.0 + frameTimeCounter * 1.8);
+                texCoordM += vec2(heatWave1, heatWave2) * 0.0003 * HEAT_DISTORTION_STRENGTH * heatFactor;
+            #endif
+
+            #ifdef NETHER_HEAT_DISTORTION
+                float netherDistFactor = smoothstep(0.02, 0.25, linearDepth);
+                float nHeatWave1 = sin(texCoord.x * 35.0 + texCoord.y * 15.0 + frameTimeCounter * 3.0);
+                float nHeatWave2 = cos(texCoord.y * 25.0 + texCoord.x * 10.0 + frameTimeCounter * 2.2);
+                float nHeatWave3 = sin((texCoord.x + texCoord.y) * 50.0 + frameTimeCounter * 4.0);
+                vec2 netherHeatOffset = vec2(nHeatWave1 + nHeatWave3 * 0.3, nHeatWave2 + nHeatWave3 * 0.3);
+                texCoordM += netherHeatOffset * 0.0004 * NETHER_HEAT_DISTORTION_STRENGTH * netherDistFactor;
+            #endif
+        }
+    #endif
+
     vec3 color = texture2D(colortex3, texCoordM).rgb;
 
     #if CHROMA_ABERRATION > 0

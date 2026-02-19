@@ -402,6 +402,12 @@ option.NETHER_STORM_LOWER_ALT.comment=Determines the lower starting point of the
 option.NETHER_STORM_HEIGHT=Nether Storm Height
 option.NETHER_STORM_HEIGHT.comment=Determines how tall the Nether Storm will form. Decrasing this value will result in the Nether Storm gathering near the "Nether Storm Lower Altitude".
 
+option.NETHER_HEAT_DISTORTION=§eNether Heat Distortion§r
+option.NETHER_HEAT_DISTORTION.comment=Adds a heat shimmer distortion effect in the Nether dimension. The effect is stronger at a distance, simulating intense heat haze.
+
+option.NETHER_HEAT_DISTORTION_STRENGTH=Nether Heat Distortion Strength
+option.NETHER_HEAT_DISTORTION_STRENGTH.comment=Adjusts the intensity of the Nether heat distortion effect.
+
 option.NETHER_VIEW_LIMIT=§eNether View Limit§r
 option.NETHER_VIEW_LIMIT.comment=Determines the maximum distance that the fog allows to be visible in the Nether. §c[-]§r Increasing this setting can impact performance when "Nether Storm" is enabled.
 value.NETHER_VIEW_LIMIT.96.0=6 Chunks
@@ -1004,6 +1010,12 @@ value.RAIN_PUDDLES.4=§cFull Coverage Always
 
 option.UNDERWATER_DISTORTION=Underwater Distortion
 option.UNDERWATER_DISTORTION.comment=Adds subtle refraction to the screen when the camera is inside water.
+
+option.HEAT_DISTORTION=§eHeat Distortion§r
+option.HEAT_DISTORTION.comment=Adds a heat shimmer distortion effect in dry biomes during the day. The effect is stronger at a distance.
+
+option.HEAT_DISTORTION_STRENGTH=Heat Distortion Strength
+option.HEAT_DISTORTION_STRENGTH.comment=Adjusts the intensity of the overworld heat distortion effect.
 
 option.SELECT_OUTLINE=Selection Outline
 option.SELECT_OUTLINE.comment=Determines the color of the block selection outline.
