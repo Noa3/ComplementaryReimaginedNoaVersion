@@ -144,6 +144,10 @@ float GetLinearDepth(float depth) {
     #include "/lib/misc/distantLightBokeh.glsl"
 #endif
 
+#if defined SSGI_ENABLED || defined RT_SHADOW_ENABLED || defined RT_REFLECTION_ENABLED || defined RT_AO_ENABLED
+    #include "/lib/lighting/screenSpaceGI.glsl"
+#endif
+
 //Program//
 void main() {
     vec4 color = vec4(texelFetch(colortex0, texelCoord, 0).rgb, 1.0);
@@ -189,7 +193,7 @@ void main() {
             color.rgb = mix(color.rgb, dlbColor, dlbMix);
         #endif
 
-        #if SSAO_QUALI > 0 || defined WORLD_OUTLINE
+        #if SSAO_QUALI > 0 || defined WORLD_OUTLINE || defined SSGI_ENABLED || defined RT_SHADOW_ENABLED || defined RT_REFLECTION_ENABLED || defined RT_AO_ENABLED
             float linearZ0 = GetLinearDepth(z0);
         #endif
 
@@ -220,6 +224,53 @@ void main() {
         #endif
 
         color.rgb *= ssao;
+
+        #if defined SSGI_ENABLED || defined RT_SHADOW_ENABLED || defined RT_REFLECTION_ENABLED || defined RT_AO_ENABLED
+            vec3 rtWorldNormal = texelFetch(colortex4, texelCoord, 0).rgb;
+            vec3 rtViewNormal = mat3(gbufferModelView) * rtWorldNormal;
+        #endif
+
+        #ifdef RT_AO_ENABLED
+            float rtAO = DoScreenSpaceRTAO(
+                viewPos.xyz, rtViewNormal, z0, linearZ0, dither
+            );
+            color.rgb *= rtAO;
+        #endif
+
+        #ifdef RT_SHADOW_ENABLED
+            #ifdef OVERWORLD
+                vec3 rtLightDir = normalize(lightVec);
+            #else
+                vec3 rtLightDir = normalize(upVec);
+            #endif
+            float rtShadow = DoScreenSpaceShadow(
+                viewPos.xyz, rtLightDir, z0, linearZ0, dither
+            );
+            color.rgb *= rtShadow;
+        #endif
+
+        #ifdef SSGI_ENABLED
+            vec3 giColor;
+            float giHit = DoScreenSpaceGlobalIllumination(
+                viewPos.xyz, rtViewNormal, z0, linearZ0, dither, giColor
+            );
+            if (giHit > 0.0) {
+                #define SSGI_INTENSITY_SCALE 0.15
+                float giStrength = RT_GI_STRENGTH * 0.01;
+                color.rgb += giColor * giStrength * SSGI_INTENSITY_SCALE;
+            }
+        #endif
+
+        #ifdef RT_REFLECTION_ENABLED
+            float rtRefHit;
+            vec3 rtRefColor = DoScreenSpaceReflection(
+                viewPos.xyz, rtViewNormal, nViewPos, z0, linearZ0, dither, rtRefHit
+            );
+            if (rtRefHit > 0.0) {
+                float rtRefStrength = RT_REFLECTION_STRENGTH * 0.01;
+                color.rgb = mix(color.rgb, rtRefColor, rtRefHit * rtRefStrength * 0.3);
+            }
+        #endif
 
         #ifdef PBR_REFLECTIONS
             vec3 texture4 = texelFetch(colortex4, texelCoord, 0).rgb;

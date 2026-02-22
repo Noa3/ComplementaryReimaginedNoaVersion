@@ -85,6 +85,17 @@
     #define SSAO_I 100 //[0 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 110 120 130 140 150 160 170 180 190 200 220 240 260 280 300]
     #define VANILLAAO_I 100 //[0 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 110 120 130 140 150 160 170 180 190 200 220 240 260 280 300]
 
+    #define RT_SUNLIGHT_TRACING 0 //[0 1 2 3]
+    #define RT_GI_STRENGTH 100 //[25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 110 120 130 140 150 160 170 180 190 200]
+    #define RT_GI_RADIUS 3.0 //[1.0 1.5 2.0 2.5 3.0 3.5 4.0 5.0 6.0 8.0]
+    #define RT_SHADOW 0 //[0 1 2 3]
+    #define RT_SHADOW_STRENGTH 100 //[25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 110 120 130 140 150 160 170 180 190 200]
+    #define RT_REFLECTION 0 //[0 1 2 3]
+    #define RT_REFLECTION_STRENGTH 100 //[25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 110 120 130 140 150 160 170 180 190 200]
+    #define RT_AO 0 //[0 1 2 3]
+    #define RT_AO_STRENGTH 100 //[25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 110 120 130 140 150 160 170 180 190 200]
+    #define RT_AO_RADIUS 2.0 //[0.5 1.0 1.5 2.0 2.5 3.0 4.0 5.0 6.0 8.0]
+
     #define AURORA_STYLE_DEFINE -1 //[-1 0 1 2]
     #define AURORA_CONDITION 3 //[0 1 2 3 4]
     #define NIGHT_NEBULAE -1 //[-1 1]
@@ -483,6 +494,25 @@
     #if SSAO_I > 0
         #define SSAO_QUALI SSAO_QUALI_DEFINE
     #else
+        #define SSAO_QUALI 0
+    #endif
+    #if RT_SUNLIGHT_TRACING > 0
+        #define RT_SUNLIGHT_QUALITY RT_SUNLIGHT_TRACING
+        #define SSGI_ENABLED
+    #endif
+    #if RT_SHADOW > 0
+        #define RT_SHADOW_QUALITY RT_SHADOW
+        #define RT_SHADOW_ENABLED
+    #endif
+    #if RT_REFLECTION > 0
+        #define RT_REFLECTION_QUALITY RT_REFLECTION
+        #define RT_REFLECTION_ENABLED
+    #endif
+    #if RT_AO > 0
+        #define RT_AO_QUALITY RT_AO
+        #define RT_AO_ENABLED
+        // RT AO supersedes SSAO when enabled
+        #undef SSAO_QUALI
         #define SSAO_QUALI 0
     #endif
     #if LIGHTSHAFT_BEHAVIOUR > 0
